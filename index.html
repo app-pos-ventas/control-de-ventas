@@ -1374,8 +1374,7 @@ async function guardarDatosNegocio() {
 
     try {
         // 1. Guardar en Supabase (upsert actualiza si existe, o crea si no existe)
-        const { data, error } = await supabaseClient
-            .from('configuracion_fiscal')
+        const { data, error } = await supabaseClient.from('configuracion_fiscal')
             .upsert([datos]);
 
         if (error) throw error;
@@ -1397,8 +1396,7 @@ async function guardarDatosNegocio() {
 async function cargarDatosNegocioUI() {
     try {
         // 1. Intentar descargar la configuración más reciente desde Supabase
-        const { data, error } = await supabaseClient
-            .from('configuracion_fiscal')
+        const { data, error } = await supabaseClient.from('configuracion_fiscal')
             .select('*')
             .eq('id', 1)
             .single();
