@@ -1395,15 +1395,16 @@ async function guardarDatosNegocio() {
 // Función para CARGAR los datos del SENIAT desde la nube al abrir la app
 async function cargarDatosNegocioUI() {
     try {
-        // 1. Intentar descargar la configuración más reciente desde Supabase
-        const { data, error } = await supabaseClient.from('configuracion_fiscal')
+        // .maybeSingle() evita el error 406 si la tabla está vacía
+        const { data, error } = await supabaseClient
+            .from('configuracion_fiscal')
             .select('*')
             .eq('id', 1)
-            .single();
+            .maybeSingle();
 
         let datosNegocio = data;
 
-        // 2. Si falla el internet o no hay datos en la nube, buscar en el respaldo local
+        // Si no hay datos en la nube o hay error, buscar en el respaldo local
         if (error || !data) {
             const guardadoLocal = localStorage.getItem('cfg_negocio');
             if (guardadoLocal) {
@@ -1411,7 +1412,7 @@ async function cargarDatosNegocioUI() {
             }
         }
 
-        // 3. Si encontramos datos (en la nube o locales), llenamos los cuadros de texto
+        // Si encontramos datos (en la nube o locales), llenamos los cuadros de texto
         if (datosNegocio) {
             document.getElementById("cfgRazonSocial").value = datosNegocio.razonSocial || "";
             document.getElementById("cfgRif").value = datosNegocio.rif || "";
@@ -1420,7 +1421,7 @@ async function cargarDatosNegocioUI() {
             document.getElementById("cfgSerie").value = datosNegocio.serie || "";
             document.getElementById("cfgCorrelativo").value = datosNegocio.correlativo || 0;
             
-            // Actualizamos el respaldo local para mantenerlo sincronizado con la nube
+            // Actualizamos el respaldo local
             localStorage.setItem('cfg_negocio', JSON.stringify(datosNegocio));
         }
     } catch (error) {
