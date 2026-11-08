@@ -41,16 +41,10 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
 /* Estilos Login */
 #loginOverlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    padding: 20px;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 99999; padding: 20px;
 }
 
 .login-card {
@@ -58,13 +52,10 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    padding: 40px 30px;
-    width: 100%;
-    max-width: 400px;
+    border-radius: 20px; padding: 40px 30px;
+    width: 100%; max-width: 400px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    color: #ffffff;
+    text-align: center; color: #ffffff;
 }
 
 .login-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
@@ -73,27 +64,17 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
 .login-input-group label { display: block; font-size: 12px; color: #cbd5e1; margin-bottom: 6px; font-weight: 600; }
 
 .login-input-group input {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 10px;
+  width: 100%; padding: 12px 16px; border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: #0f172a !important;
-  color: #ffffff !important;
-  font-size: 14px;
-  outline: none;
+  background-color: #0f172a !important; color: #ffffff !important;
+  font-size: 14px; outline: none;
 }
 
 .btn-login {
-    width: 100%;
-    padding: 14px;
+    width: 100%; padding: 14px;
     background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 10px;
+    color: #ffffff; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px;
 }
 
 .login-error { color: #ef4444; font-size: 12px; margin-top: 12px; display: none; }
@@ -139,6 +120,12 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
 .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 15px; align-items: end; }
+
+/* Grid de Botones Táctiles */
+.grid-botones-rapidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
+.btn-producto-tactil { background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px 12px; text-align: center; cursor: pointer; box-shadow: var(--shadow-soft); transition: all 0.15s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.btn-producto-tactil:hover { border-color: var(--accent-primary); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(99, 102, 241, 0.15); }
+.btn-producto-tactil:active { transform: scale(0.97); }
 
 label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
 input, select, textarea { width: 100%; padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: #f8fafc; color: var(--text-dark); outline: none; transition: border 0.2s; }
@@ -254,7 +241,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 <div class="sidebar-menu-title">Menú Principal</div>
 <ul class="nav-list">
 <li><button class="tab-btn active" onclick="cambiarPestaña('ventas')"><i class="fa-solid fa-cart-shopping"></i> Registrar Venta</button></li>
-<li><button class="tab-btn" onclick="cambiarPestaña('asistente')"><i class="fa-solid fa-microphone-lines"></i> Asistente de Voz IA</button></li>
+<li><button class="tab-btn" onclick="cambiarPestaña('ventarapida')"><i class="fa-solid fa-bolt"></i> Venta Rápida</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('inventario')"><i class="fa-solid fa-boxes-stacked"></i> Inventario / Stock</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('deudas')"><i class="fa-solid fa-file-invoice-dollar"></i> Cuentas por Cobrar</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('historial')"><i class="fa-solid fa-chart-line"></i> Historial Acumulado</button></li>
@@ -388,36 +375,42 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
-<!-- PESTAÑA 2: ASISTENTE DE VOZ / TEXTO INTELIGENTE -->
-<div id="tab-asistente" class="tab-content">
+<!-- PESTAÑA 2: VENTA RÁPIDA (BOTONES TÁCTILES) -->
+<div id="tab-ventarapida" class="tab-content">
 <div class="content-box" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border: 1px solid #c7d2fe;">
-<div class="content-box-title" style="color: #4f46e5;"><i class="fa-solid fa-microphone-lines"></i> Asistente de Ventas Hablado / Escrito (Venta Rápida)</div>
+<div class="content-box-title" style="color: #4f46e5;"><i class="fa-solid fa-bolt"></i> Venta Rápida por Botones Táctiles</div>
 <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-  Habla o escribe de forma natural la venta de tu cliente. El asistente detectará automáticamente el nombre y los productos del inventario, descontará el stock y registrará la operación al instante como venta normal de contado.
+  Toca los productos para agregarlos al carrito de forma inmediata. Sin errores de escritura.
 </p>
 
-<div style="display: flex; flex-direction: column; gap: 15px;">
+<div class="grid-2" style="margin-bottom: 20px;">
   <div>
-    <label>Dicta o escribe lo que compró el cliente:</label>
-    <div style="display: flex; gap: 10px;">
-      <textarea id="inputAsistenteTexto" rows="3" placeholder="Ej: Beatriz se llevó dos refrescos y una malta" style="flex: 1; resize: none;"></textarea>
-      <button type="button" id="btnMicrofono" onclick="iniciarEscuchaAsistente()" title="Hablar por micrófono" style="background: var(--accent-gradient); color: white; border: none; width: 50px; border-radius: var(--radius-md); cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;">
-        <i class="fa-solid fa-microphone"></i>
-      </button>
-    </div>
+    <label>Nombre del Cliente / Comprador</label>
+    <input type="text" id="nombreClienteRapido" placeholder="Ej: Beatriz o Cliente General" value="Cliente General">
   </div>
-  
-  <button class="btn-success-solid" onclick="procesarTextoAsistente()"><i class="fa-solid fa-wand-magic-sparkles"></i> Procesar y Registrar Venta con el Asistente</button>
-</div>
+  <div>
+    <label>Condición de Pago</label>
+    <select id="tipoPagoRapido">
+      <option value="Contado">Contado</option>
+      <option value="Fiado">Fiado</option>
+    </select>
+  </div>
 </div>
 
-<div class="content-box">
-<div class="content-box-title"><i class="fa-solid fa-lightbulb"></i> Ejemplos de comandos rápidos:</div>
-<ul style="padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-  <li><em>"Beatriz se llevó dos refrescos y una malta"</em></li>
-  <li><em>"Juan compró 3 inyectadoras y 1 solución fisiológica"</em></li>
-  <li><em>"Maria se llevó una gaza estéril"</em></li>
-</ul>
+<label style="margin-bottom: 10px; font-weight: 700; color: var(--accent-primary);">SELECCIONA EL PRODUCTO (TOCA PARA AGREGAR)</label>
+<div id="gridBotonesRapidos" class="grid-botones-rapidos">
+  <!-- Los botones se generan dinámicamente con sus iconos automáticos -->
+</div>
+
+<label style="margin-top: 15px;">Productos en esta Venta Rápida:</label>
+<div class="cart-list" id="carritoListaRapido"><p style="color:var(--text-light); margin:5px; font-size:13px;">Toca un botón de arriba para agregar productos.</p></div>
+
+<div class="total-display-box">
+<div class="total-display-usd">Total Orden: $<span id="subtotalRapidoUSD">0.00</span></div>
+<div class="total-display-bs">Monto a Pagar: <span id="subtotalRapidoBS">0.00</span> Bs.</div>
+</div>
+
+<button class="btn-success-solid" onclick="finalizarVentaRapida()"><i class="fa-solid fa-bolt"></i> REGISTRAR VENTA RÁPIDA</button>
 </div>
 </div>
 
@@ -600,6 +593,7 @@ try {
 }
 
 let carrito = [];
+let carritoRapido = [];
 let productosGlobales = [];
 let ventasGlobales = [];
 let filtroCategoriaActual = 'todas';
@@ -608,7 +602,6 @@ let ventaTempParaImprimir = null;
 document.addEventListener("DOMContentLoaded", async () => {
   verificarSesion();
 
-  // Quitar la pantalla de carga de forma segura
   const splash = document.getElementById('app-splash-screen');
   if (splash) {
     splash.style.opacity = '0';
@@ -708,6 +701,7 @@ function guardarYActualizarTasa() {
   if (tasaEl) localStorage.setItem('tasa_usd', tasaEl.value);
   
   renderizarCarrito();
+  renderizarCarritoRapido();
   cargarCatalogoProductos();
   cargarVentasDia();
   cargarCuentasPorCobrar();
@@ -725,10 +719,11 @@ function cambiarPestaña(tab) {
   const targetContent = document.getElementById(`tab-${tab}`);
   if (targetContent) targetContent.classList.add('active');
 
-  const mapTabs = { 'ventas': 0, 'asistente': 1, 'inventario': 2, 'deudas': 3, 'historial': 4, 'productos': 5, 'negocio': 6 };
+  const mapTabs = { 'ventas': 0, 'ventarapida': 1, 'inventario': 2, 'deudas': 3, 'historial': 4, 'productos': 5, 'negocio': 6 };
   if (btns[mapTabs[tab]]) btns[mapTabs[tab]].classList.add('active');
 
   if(tab === 'ventas') cargarVentasDia();
+  if(tab === 'ventarapida') renderizarBotonesVentaRapida();
   if(tab === 'inventario') cargarInventario();
   if(tab === 'deudas') cargarCuentasPorCobrar();
   if(tab === 'historial') cargarHistorialAcumulado();
@@ -762,8 +757,22 @@ function toggleOpcionesFiado() {
 }
 
 // ==========================================
-// 4. CATÁLOGO E INVENTARIO CON BUSCADOR
+// 4. CATÁLOGO, ICONOS AUTOMÁTICOS E INVENTARIO
 // ==========================================
+function obtenerIconoAutomatico(nombreProducto) {
+  const nombre = nombreProducto.toLowerCase();
+  if (nombre.includes('refresco') || nombre.includes('malta') || nombre.includes('agua') || nombre.includes('jugo') || nombre.includes('bebida')) {
+    return 'fa-bottle-water';
+  }
+  if (nombre.includes('inyectadora') || nombre.includes('jeringa') || nombre.includes('aguja')) {
+    return 'fa-syringe';
+  }
+  if (nombre.includes('solución') || nombre.includes('suero') || nombre.includes('gaza') || nombre.includes('alcohol') || nombre.includes('cura')) {
+    return 'fa-briefcase-medical';
+  }
+  return 'fa-tag';
+}
+
 async function cargarCatalogoProductos() {
   let cargados = false;
   if (supabaseClient) {
@@ -795,21 +804,22 @@ async function cargarCatalogoProductos() {
 
   const tasa = obtenerTasaActual();
   const tbody = document.getElementById("tablaProductosCat");
-  if (!tbody) return;
-  
-  tbody.innerHTML = "";
-  productosGlobales.forEach((p, index) => {
-    const precioBs = (p.precioUSD * tasa).toFixed(2);
-    tbody.innerHTML += `
-      <tr>
-        <td><strong>${p.nombre}</strong></td>
-        <td>$${p.precioUSD.toFixed(2)}</td>
-        <td><strong style="color:var(--accent-primary);">${precioBs} Bs.</strong></td>
-        <td><strong>${p.stock}</strong> unid.</td>
-        <td><button class="btn-danger" onclick="borrarProductoCatalogo(${index})"><i class="fa-solid fa-trash"></i></button></td>
-      </tr>
-    `;
-  });
+  if (tbody) {
+    tbody.innerHTML = "";
+    productosGlobales.forEach((p, index) => {
+      const precioBs = (p.precioUSD * tasa).toFixed(2);
+      tbody.innerHTML += `
+        <tr>
+          <td><strong>${p.nombre}</strong></td>
+          <td>$${p.precioUSD.toFixed(2)}</td>
+          <td><strong style="color:var(--accent-primary);">${precioBs} Bs.</strong></td>
+          <td><strong>${p.stock}</strong> unid.</td>
+          <td><button class="btn-danger" onclick="borrarProductoCatalogo(${index})"><i class="fa-solid fa-trash"></i></button></td>
+        </tr>
+      `;
+    });
+  }
+  renderizarBotonesVentaRapida();
 }
 
 async function guardarNuevoProducto() {
@@ -884,7 +894,6 @@ function cargarInventario() {
   });
 }
 
-// Búsqueda instantánea en Inventario / Stock
 function filtrarInventario() {
   const filtro = document.getElementById('buscadorInventario').value.toLowerCase().trim();
   const filas = document.querySelectorAll('#tablaInventario tr');
@@ -911,7 +920,7 @@ async function actualizarStock(index) {
 }
 
 // ==========================================
-// 5. DROPDOWN Y CARRITO
+// 5. DROPDOWN Y CARRITO MANUAL
 // ==========================================
 function mostrarListaDropdown() {
   filtrarListaDropdown();
@@ -1024,98 +1033,118 @@ function quitarDelCarrito(index) {
 }
 
 // ==========================================
-// 6. ASISTENTE INTELIGENTE DE VOZ / TEXTO
+// 6. VENTA RÁPIDA POR BOTONES TÁCTILES
 // ==========================================
-function iniciarEscuchaAsistente() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert("Tu navegador no soporta reconocimiento de voz directo. Escribe la venta en el cuadro de texto.");
+function renderizarBotonesVentaRapida() {
+  const contenedor = document.getElementById("gridBotonesRapidos");
+  if (!contenedor) return;
+  
+  const tasa = obtenerTasaActual();
+  contenedor.innerHTML = "";
+
+  if (productosGlobales.length === 0) {
+    contenedor.innerHTML = '<p style="color:var(--text-light); font-size:13px;">No hay productos en el catálogo.</p>';
     return;
   }
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'es-VE';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-  
-  const btnVoz = document.getElementById('btnMicrofono');
-  if (btnVoz) btnVoz.style.color = '#ef4444';
-  
-  recognition.onresult = (event) => {
-    const speechResult = event.results[0][0].transcript;
-    document.getElementById('inputAsistenteTexto').value = speechResult;
-    if (btnVoz) btnVoz.style.color = 'white';
-    procesarTextoAsistente();
-  };
-  
-  recognition.onerror = () => {
-    if (btnVoz) btnVoz.style.color = 'white';
-    alert("No se pudo escuchar claramente. Inténtalo de nuevo.");
-  };
-  
-  recognition.onend = () => {
-    if (btnVoz) btnVoz.style.color = 'white';
-  };
-  
-  recognition.start();
+
+  productosGlobales.forEach((p) => {
+    const icono = obtenerIconoAutomatico(p.nombre);
+    const precioBs = (p.precioUSD * tasa).toFixed(2);
+
+    contenedor.innerHTML += `
+      <button type="button" class="btn-producto-tactil" onclick="agregarAlCarritoRapido(${p.id})">
+        <div style="font-size: 22px; color: var(--accent-primary); margin-bottom: 6px;">
+          <i class="fa-solid ${icono}"></i>
+        </div>
+        <div style="font-weight: 700; font-size: 13px; color: var(--text-dark); margin-bottom: 2px;">${p.nombre}</div>
+        <div style="font-weight: 800; color: var(--accent-primary); font-size: 14px;">$${p.precioUSD.toFixed(2)}</div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${p.stock} Stock</div>
+      </button>
+    `;
+  });
+  renderizarCarritoRapido();
 }
 
-async function procesarTextoAsistente() {
-  const texto = document.getElementById("inputAsistenteTexto").value.trim();
-  if (!texto) {
-    alert("Por favor dicta o escribe la venta.");
+function agregarAlCarritoRapido(idProd) {
+  const prod = productosGlobales.find(p => p.id === idProd);
+  if (!prod) return;
+
+  // Verificar cantidad actual en el carrito rápido
+  const itemExistente = carritoRapido.find(i => i.id === idProd);
+  const cantidadActual = itemExistente ? itemExistente.cantidad : 0;
+
+  if ((cantidadActual + 1) > prod.stock) {
+    alert(`Stock insuficiente. Solo quedan ${prod.stock} unidades.`);
     return;
   }
 
-  let cliente = "Cliente General";
-  let textoLimpio = texto.toLowerCase()
-    .replace(/se llevó/g, 'compró')
-    .replace(/llevó/g, 'compró')
-    .replace(/el cliente/g, '')
-    .replace(/la cliente/g, '');
+  if (itemExistente) {
+    itemExistente.cantidad++;
+    itemExistente.subtotalUSD = itemExistente.cantidad * itemExistente.precioUSD;
+  } else {
+    carritoRapido.push({
+      id: prod.id,
+      nombre: prod.nombre,
+      precioUSD: prod.precioUSD,
+      cantidad: 1,
+      subtotalUSD: prod.precioUSD
+    });
+  }
+  renderizarCarritoRapido();
+}
 
-  let partes = textoLimpio.split('compró');
-  if (partes.length > 1 && partes[0].trim().length > 0) {
-    cliente = partes[0].trim();
-    cliente = cliente.charAt(0).toUpperCase() + cliente.slice(1);
-    textoLimpio = partes[1];
+function renderizarCarritoRapido() {
+  const contenedor = document.getElementById("carritoListaRapido");
+  if (!contenedor) return;
+  const tasa = obtenerTasaActual();
+
+  if (carritoRapido.length === 0) {
+    contenedor.innerHTML = '<p style="color:var(--text-light); margin:5px; font-size:13px;">Toca un botón de arriba para agregar productos.</p>';
+    if (document.getElementById("subtotalRapidoUSD")) document.getElementById("subtotalRapidoUSD").innerText = "0.00";
+    if (document.getElementById("subtotalRapidoBS")) document.getElementById("subtotalRapidoBS").innerText = "0.00";
+    return;
   }
 
-  let itemsEncontrados = [];
+  contenedor.innerHTML = "";
+  let totalUSD = 0;
 
-  productosGlobales.forEach(p => {
-    const nombreProdLower = p.nombre.toLowerCase();
-    if (textoLimpio.includes(nombreProdLower)) {
-      let cantidad = 1;
-      const regex = new RegExp(`(un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|\\d+)\\s+(${nombreProdLower})`, 'i');
-      const match = textoLimpio.match(regex);
-      if (match && match[1]) {
-        const numStr = match[1].toLowerCase();
-        const mapNum = { 'un': 1, 'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10 };
-        cantidad = mapNum[numStr] || parseInt(numStr) || 1;
-      }
-
-      itemsEncontrados.push({
-        id: p.id,
-        nombre: p.nombre,
-        precioUSD: p.precioUSD,
-        cantidad: cantidad,
-        subtotalUSD: p.precioUSD * cantidad
-      });
-    }
+  carritoRapido.forEach((item, index) => {
+    totalUSD += item.subtotalUSD;
+    const subBs = (item.subtotalUSD * tasa).toFixed(2);
+    contenedor.innerHTML += `
+      <div class="cart-item">
+        <span><strong>${item.cantidad}x</strong> ${item.nombre} ($${item.precioUSD.toFixed(2)} c/u)</span>
+        <span><strong>$${item.subtotalUSD.toFixed(2)}</strong> <small style="color:var(--accent-primary);">(${subBs} Bs)</small> <button class="btn-danger" style="margin-left:8px;" onclick="quitarDelCarritoRapido(${index})"><i class="fa-solid fa-xmark"></i></button></span>
+      </div>
+    `;
   });
 
-  if (itemsEncontrados.length === 0) {
-    alert("No se reconocieron productos válidos en el mensaje. Revisa que coincidan con los nombres del inventario.");
+  if (document.getElementById("subtotalRapidoUSD")) document.getElementById("subtotalRapidoUSD").innerText = totalUSD.toFixed(2);
+  if (document.getElementById("subtotalRapidoBS")) document.getElementById("subtotalRapidoBS").innerText = (totalUSD * tasa).toFixed(2);
+}
+
+function quitarDelCarritoRapido(index) {
+  carritoRapido.splice(index, 1);
+  renderizarCarritoRapido();
+}
+
+async function finalizarVentaRapida() {
+  if (carritoRapido.length === 0) {
+    alert("Agrega al menos un producto tocando los botones.");
     return;
   }
 
   const tasa = obtenerTasaActual();
-  const fecha = document.getElementById("fechaVentas") ? document.getElementById("fechaVentas").value : new Date().toISOString().split('T')[0];
+  const cliente = document.getElementById("nombreClienteRapido").value.trim() || "Cliente General";
+  const tipoPago = document.getElementById("tipoPagoRapido").value;
+  const fecha = new Date().toISOString().split('T')[0];
   const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  let subtotalUSD = itemsEncontrados.reduce((acc, i) => acc + i.subtotalUSD, 0);
+  let subtotalUSD = 0;
+  carritoRapido.forEach(i => subtotalUSD += i.subtotalUSD);
   let totalUSD = subtotalUSD;
   let totalBS = totalUSD * tasa;
+  let estado = (tipoPago === 'Fiado') ? 'Pendiente' : 'Pagado';
 
   const nuevaVenta = {
     id: Date.now(),
@@ -1125,9 +1154,9 @@ async function procesarTextoAsistente() {
     rifCliente: "V-00000000",
     telefonoCliente: "N/A",
     dirCliente: "Local",
-    categoria: "Contado",
-    detalle: itemsEncontrados.map(i => `${i.cantidad} ${i.nombre}`).join(", "),
-    items: itemsEncontrados,
+    categoria: tipoPago === 'Fiado' ? 'Particular' : 'Contado',
+    detalle: carritoRapido.map(i => `${i.cantidad} ${i.nombre}`).join(", "),
+    items: [...carritoRapido],
     subtotalUSD: subtotalUSD,
     subtotalBS: subtotalUSD * tasa,
     ivaUSD: 0,
@@ -1135,18 +1164,12 @@ async function procesarTextoAsistente() {
     montoUSD: totalUSD,
     montoBS: totalBS,
     tasaUsada: tasa,
-    estado: "Pagado"
+    estado: estado
   };
 
-  await guardarVentaEnSistemaDesdeAsistente(nuevaVenta);
-  document.getElementById("inputAsistenteTexto").value = "";
-  alert(`✅ Venta registrada con éxito para "${cliente}" por el asistente.`);
-  cambiarPestaña('ventas');
-}
-
-async function guardarVentaEnSistemaDesdeAsistente(venta) {
-  for (let item of venta.items) {
-    const prod = productosGlobales.find(p => p.nombre.toLowerCase() === item.nombre.toLowerCase());
+  // Descontar stock
+  for (let item of nuevaVenta.items) {
+    const prod = productosGlobales.find(p => p.id === item.id);
     if (prod) {
       prod.stock = Math.max(0, prod.stock - item.cantidad);
       if (supabaseClient && prod.id) {
@@ -1156,29 +1179,35 @@ async function guardarVentaEnSistemaDesdeAsistente(venta) {
   }
   localStorage.setItem('catalogo_productos', JSON.stringify(productosGlobales));
 
-  ventasGlobales.push(venta);
+  ventasGlobales.push(nuevaVenta);
   localStorage.setItem('ventas_locales', JSON.stringify(ventasGlobales));
 
   if (supabaseClient) {
     try {
       await supabaseClient.from('ventas').insert([{
-        id: venta.id,
-        fecha: venta.fecha,
-        hora: venta.hora,
-        cliente: venta.cliente,
-        rif_cliente: venta.rifCliente,
-        dir_cliente: venta.dirCliente,
-        categoria: venta.categoria,
-        detalle: venta.detalle,
-        monto_usd: venta.montoUSD,
-        monto_bs: venta.montoBS,
-        tasa_usada: venta.tasaUsada,
-        estado: venta.estado,
-        items: venta.items
+        id: nuevaVenta.id,
+        fecha: nuevaVenta.fecha,
+        hora: nuevaVenta.hora,
+        cliente: nuevaVenta.cliente,
+        rif_cliente: nuevaVenta.rifCliente,
+        dir_cliente: nuevaVenta.dirCliente,
+        categoria: nuevaVenta.categoria,
+        detalle: nuevaVenta.detalle,
+        monto_usd: nuevaVenta.montoUSD,
+        monto_bs: nuevaVenta.montoBS,
+        tasa_usada: nuevaVenta.tasaUsada,
+        estado: nuevaVenta.estado,
+        items: nuevaVenta.items
       }]);
     } catch(e){}
   }
+
+  carritoRapido = [];
+  document.getElementById("nombreClienteRapido").value = "Cliente General";
+  renderizarCarritoRapido();
   await sincronizarTodo();
+  alert(`✅ Venta rápida registrada con éxito para "${cliente}".`);
+  cambiarPestaña('ventas');
 }
 
 // ==========================================
