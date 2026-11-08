@@ -51,7 +51,6 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
     align-items: center;
     z-index: 99999;
     padding: 20px;
-    box-sizing: border-box;
 }
 
 .login-card {
@@ -87,7 +86,6 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
   background-color: #0f172a !important;
   color: #ffffff !important;
   font-size: 14px;
-  box-sizing: border-box;
   outline: none;
   transition: all 0.3s ease;
 }
@@ -161,8 +159,8 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
 .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 15px; align-items: end; }
 
 label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
-input, select { width: 100%; padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: #f8fafc; color: var(--text-dark); outline: none; transition: border 0.2s; }
-input:focus, select:focus { border-color: var(--accent-primary); background: #fff; }
+input, select, textarea { width: 100%; padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: #f8fafc; color: var(--text-dark); outline: none; transition: border 0.2s; }
+input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); background: #fff; }
 
 .btn-primary { background: var(--accent-gradient); color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; transition: opacity 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-primary:hover { opacity: 0.95; }
@@ -204,7 +202,6 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 .ticket-total { border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 10px 0; margin-top: 10px; font-weight: bold; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-/* Adaptabilidad Móvil Estándar */
 @media screen and (max-width: 768px) {
     body { width: 100% !important; overflow-x: hidden !important; padding: 5px !important; }
     .app-container { display: flex !important; flex-direction: column !important; width: 100% !important; padding: 0 !important; }
@@ -216,7 +213,6 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
     input, select, textarea { width: 100% !important; max-width: 100% !important; }
 }
 
-/* Reglas de Impresión Limpia */
 @media print {
     body * { visibility: hidden !important; }
     #ticketPrintArea, #ticketPrintArea *, #modalTicketFlotante, #modalTicketFlotante * { visibility: visible !important; }
@@ -278,6 +274,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 <div class="sidebar-menu-title">Menú Principal</div>
 <ul class="nav-list">
 <li><button class="tab-btn active" onclick="cambiarPestaña('ventas')"><i class="fa-solid fa-cart-shopping"></i> Registrar Venta</button></li>
+<li><button class="tab-btn" onclick="cambiarPestaña('asistente')"><i class="fa-solid fa-microphone-lines"></i> Asistente de Voz IA</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('inventario')"><i class="fa-solid fa-boxes-stacked"></i> Inventario / Stock</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('deudas')"><i class="fa-solid fa-file-invoice-dollar"></i> Cuentas por Cobrar</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('historial')"><i class="fa-solid fa-chart-line"></i> Historial Acumulado</button></li>
@@ -298,6 +295,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 1: REGISTRAR VENTA MANUAL -->
 <div id="tab-ventas" class="tab-content active">
 <div class="summary-cards">
 <div class="kpi-card">
@@ -410,9 +408,44 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 2: ASISTENTE DE VOZ / TEXTO INTELIGENTE -->
+<div id="tab-asistente" class="tab-content">
+<div class="content-box" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border: 1px solid #c7d2fe;">
+<div class="content-box-title" style="color: #4f46e5;"><i class="fa-solid fa-microphone-lines"></i> Asistente de Ventas Hablado / Escrito (Venta Rápida)</div>
+<p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+  Habla o escribe de forma natural la venta de tu cliente. El asistente detectará automáticamente el nombre y los productos del inventario, descontará el stock y registrará la operación al instante como venta normal de contado.
+</p>
+
+<div style="display: flex; flex-direction: column; gap: 15px;">
+  <div>
+    <label>Dicta o escribe lo que compró el cliente:</label>
+    <div style="display: flex; gap: 10px;">
+      <textarea id="inputAsistenteTexto" rows="3" placeholder="Ej: Beatriz se llevó dos refrescos y una malta" style="flex: 1; resize: none;"></textarea>
+      <button type="button" id="btnMicrofono" onclick="iniciarEscuchaAsistente()" title="Hablar por micrófono" style="background: var(--accent-gradient); color: white; border: none; width: 50px; border-radius: var(--radius-md); cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+    </div>
+  </div>
+  
+  <button class="btn-success-solid" onclick="procesarTextoAsistente()"><i class="fa-solid fa-wand-magic-sparkles"></i> Procesar y Registrar Venta con el Asistente</button>
+</div>
+</div>
+
+<div class="content-box">
+<div class="content-box-title"><i class="fa-solid fa-lightbulb"></i> Ejemplos de comandos rápidos:</div>
+<ul style="padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+  <li><em>"Beatriz se llevó dos refrescos y una malta"</em></li>
+  <li><em>"Juan compró 3 inyectadoras y 1 solución fisiológica"</em></li>
+  <li><em>"Maria se llevó una gaza estéril"</em></li>
+</ul>
+</div>
+</div>
+
+<!-- PESTAÑA 3: INVENTARIO -->
 <div id="tab-inventario" class="tab-content">
 <div class="content-box">
 <div class="content-box-title"><i class="fa-solid fa-boxes-stacked"></i> Control de Existencias en Inventario</div>
+<input type="text" id="buscadorInventario" placeholder="🔍 Buscar producto en stock..." oninput="filtrarInventario()" style="margin-bottom: 15px;">
 <div class="table-responsive">
 <table>
 <thead><tr><th>Producto</th><th>Precio ($)</th><th>Stock Actual</th><th>Estado</th><th>Actualizar Stock</th></tr></thead>
@@ -422,6 +455,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 4: CUENTAS POR COBRAR -->
 <div id="tab-deudas" class="tab-content">
 <div class="content-box">
 <div class="content-box-title"><i class="fa-solid fa-file-invoice-dollar"></i> Cuentas Pendientes por Cobrar</div>
@@ -444,6 +478,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 5: HISTORIAL -->
 <div id="tab-historial" class="tab-content">
 <div class="content-box">
 <div class="content-box-title"><i class="fa-solid fa-chart-line"></i> Ventas Acumuladas</div>
@@ -486,6 +521,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 6: PRODUCTOS Y PRECIOS -->
 <div id="tab-productos" class="tab-content">
 <div class="content-box">
 <div class="content-box-title"><i class="fa-solid fa-tag"></i> Registrar Nuevo Producto en Dólares ($)</div>
@@ -508,6 +544,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 </div>
 
+<!-- PESTAÑA 7: CONFIGURACIÓN SENIAT -->
 <div id="tab-negocio" class="tab-content">
 <div class="content-box">
 <div class="content-box-title"><i class="fa-solid fa-building-columns"></i> Configuración Fiscal del Negocio (SENIAT)</div>
@@ -582,25 +619,11 @@ try {
   console.warn("Supabase en modo offline o no configurado:", e);
 }
 
-// Variables Globales
 let carrito = [];
 let productosGlobales = [];
 let ventasGlobales = [];
 let filtroCategoriaActual = 'todas';
 let ventaTempParaImprimir = null;
-
-// ==========================================
-// 2. EVENTOS Y LOGIN
-// ==========================================
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    const splash = document.getElementById('app-splash-screen');
-    if (splash) {
-      splash.style.opacity = '0';
-      setTimeout(() => splash.remove(), 500);
-    }
-  }, 600);
-});
 
 document.addEventListener("DOMContentLoaded", async () => {
   verificarSesion();
@@ -715,7 +738,7 @@ function cambiarPestaña(tab) {
   const targetContent = document.getElementById(`tab-${tab}`);
   if (targetContent) targetContent.classList.add('active');
 
-  const mapTabs = { 'ventas': 0, 'inventario': 1, 'deudas': 2, 'historial': 3, 'productos': 4, 'negocio': 5 };
+  const mapTabs = { 'ventas': 0, 'asistente': 1, 'inventario': 2, 'deudas': 3, 'historial': 4, 'productos': 5, 'negocio': 6 };
   if (btns[mapTabs[tab]]) btns[mapTabs[tab]].classList.add('active');
 
   if(tab === 'ventas') cargarVentasDia();
@@ -752,7 +775,7 @@ function toggleOpcionesFiado() {
 }
 
 // ==========================================
-// 4. CATÁLOGO E INVENTARIO
+// 4. CATÁLOGO E INVENTARIO CON BUSCADOR
 // ==========================================
 async function cargarCatalogoProductos() {
   let cargados = false;
@@ -775,7 +798,9 @@ async function cargarCatalogoProductos() {
     productosGlobales = JSON.parse(localStorage.getItem('catalogo_productos')) || [
       { id: 1, nombre: "Solución Fisiológica", precioUSD: 2.50, stock: 25 },
       { id: 2, nombre: "Inyectadora 5ml", precioUSD: 0.50, stock: 100 },
-      { id: 3, nombre: "Gaza Estéril", precioUSD: 1.00, stock: 50 }
+      { id: 3, nombre: "Gaza Estéril", precioUSD: 1.00, stock: 50 },
+      { id: 4, nombre: "Refresco", precioUSD: 2.00, stock: 40 },
+      { id: 5, nombre: "Malta", precioUSD: 1.50, stock: 30 }
     ];
   }
 
@@ -869,6 +894,16 @@ function cargarInventario() {
         </td>
       </tr>
     `;
+  });
+}
+
+// Búsqueda instantánea en Inventario / Stock
+function filtrarInventario() {
+  const filtro = document.getElementById('buscadorInventario').value.toLowerCase().trim();
+  const filas = document.querySelectorAll('#tablaInventario tr');
+  filas.forEach((fila) => {
+    const textoFila = fila.textContent.toLowerCase();
+    fila.style.display = textoFila.includes(filtro) ? '' : 'none';
   });
 }
 
@@ -1002,7 +1037,165 @@ function quitarDelCarrito(index) {
 }
 
 // ==========================================
-// 6. REGISTRO DE VENTAS
+// 6. ASISTENTE INTELIGENTE DE VOZ / TEXTO
+// ==========================================
+function iniciarEscuchaAsistente() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("Tu navegador no soporta reconocimiento de voz directo. Escribe la venta en el cuadro de texto.");
+    return;
+  }
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'es-VE';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  
+  const btnVoz = document.getElementById('btnMicrofono');
+  if (btnVoz) btnVoz.style.color = '#ef4444';
+  
+  recognition.onresult = (event) => {
+    const speechResult = event.results[0][0].transcript;
+    document.getElementById('inputAsistenteTexto').value = speechResult;
+    if (btnVoz) btnVoz.style.color = 'white';
+    procesarTextoAsistente();
+  };
+  
+  recognition.onerror = () => {
+    if (btnVoz) btnVoz.style.color = 'white';
+    alert("No se pudo escuchar claramente. Inténtalo de nuevo.");
+  };
+  
+  recognition.onend = () => {
+    if (btnVoz) btnVoz.style.color = 'white';
+  };
+  
+  recognition.start();
+}
+
+async function procesarTextoAsistente() {
+  const texto = document.getElementById("inputAsistenteTexto").value.trim();
+  if (!texto) {
+    alert("Por favor dicta o escribe la venta.");
+    return;
+  }
+
+  let cliente = "Cliente General";
+  let textoLimpio = texto.toLowerCase()
+    .replace(/se llevó/g, 'compró')
+    .replace(/llevó/g, 'compró')
+    .replace(/el cliente/g, '')
+    .replace(/la cliente/g, '');
+
+  let partes = textoLimpio.split('compró');
+  if (partes.length > 1 && partes[0].trim().length > 0) {
+    cliente = partes[0].trim();
+    cliente = cliente.charAt(0).toUpperCase() + cliente.slice(1);
+    textoLimpio = partes[1];
+  }
+
+  let itemsEncontrados = [];
+
+  productosGlobales.forEach(p => {
+    const nombreProdLower = p.nombre.toLowerCase();
+    if (textoLimpio.includes(nombreProdLower)) {
+      let cantidad = 1;
+      const regex = new RegExp(`(un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|\\d+)\\s+(${nombreProdLower})`, 'i');
+      const match = textoLimpio.match(regex);
+      if (match && match[1]) {
+        const numStr = match[1].toLowerCase();
+        const mapNum = { 'un': 1, 'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10 };
+        cantidad = mapNum[numStr] || parseInt(numStr) || 1;
+      }
+
+      itemsEncontrados.push({
+        id: p.id,
+        nombre: p.nombre,
+        precioUSD: p.precioUSD,
+        cantidad: cantidad,
+        subtotalUSD: p.precioUSD * cantidad
+      });
+    }
+  });
+
+  if (itemsEncontrados.length === 0) {
+    alert("No se reconocieron productos válidos en el mensaje. Revisa que coincidan con los nombres del inventario.");
+    return;
+  }
+
+  const tasa = obtenerTasaActual();
+  const fecha = document.getElementById("fechaVentas") ? document.getElementById("fechaVentas").value : new Date().toISOString().split('T')[0];
+  const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  let subtotalUSD = itemsEncontrados.reduce((acc, i) => acc + i.subtotalUSD, 0);
+  let totalUSD = subtotalUSD;
+  let totalBS = totalUSD * tasa;
+
+  const nuevaVenta = {
+    id: Date.now(),
+    fecha: fecha,
+    hora: hora,
+    cliente: cliente,
+    rifCliente: "V-00000000",
+    telefonoCliente: "N/A",
+    dirCliente: "Local",
+    categoria: "Contado",
+    detalle: itemsEncontrados.map(i => `${i.cantidad} ${i.nombre}`).join(", "),
+    items: itemsEncontrados,
+    subtotalUSD: subtotalUSD,
+    subtotalBS: subtotalUSD * tasa,
+    ivaUSD: 0,
+    ivaBS: 0,
+    montoUSD: totalUSD,
+    montoBS: totalBS,
+    tasaUsada: tasa,
+    estado: "Pagado"
+  };
+
+  await guardarVentaEnSistemaDesdeAsistente(nuevaVenta);
+  document.getElementById("inputAsistenteTexto").value = "";
+  alert(`✅ Venta registrada con éxito para "${cliente}" por el asistente.`);
+  cambiarPestaña('ventas');
+}
+
+async function guardarVentaEnSistemaDesdeAsistente(venta) {
+  for (let item of venta.items) {
+    const prod = productosGlobales.find(p => p.nombre.toLowerCase() === item.nombre.toLowerCase());
+    if (prod) {
+      prod.stock = Math.max(0, prod.stock - item.cantidad);
+      if (supabaseClient && prod.id) {
+        try { await supabaseClient.from('productos').update({ stock: prod.stock }).eq('id', prod.id); } catch(e){}
+      }
+    }
+  }
+  localStorage.setItem('catalogo_productos', JSON.stringify(productosGlobales));
+
+  ventasGlobales.push(venta);
+  localStorage.setItem('ventas_locales', JSON.stringify(ventasGlobales));
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('ventas').insert([{
+        id: venta.id,
+        fecha: venta.fecha,
+        hora: venta.hora,
+        cliente: venta.cliente,
+        rif_cliente: venta.rifCliente,
+        dir_cliente: venta.dirCliente,
+        categoria: venta.categoria,
+        detalle: venta.detalle,
+        monto_usd: venta.montoUSD,
+        monto_bs: venta.montoBS,
+        tasa_usada: venta.tasaUsada,
+        estado: venta.estado,
+        items: venta.items
+      }]);
+    } catch(e){}
+  }
+  await sincronizarTodo();
+}
+
+// ==========================================
+// 7. REGISTRO DE VENTAS MANUALES
 // ==========================================
 function finalizarVenta(conFactura = false) {
   if(carrito.length === 0) {
@@ -1188,7 +1381,7 @@ async function eliminarVenta(id) {
 }
 
 // ==========================================
-// 7. CUENTAS POR COBRAR (DEUDAS)
+// 8. CUENTAS POR COBRAR (DEUDAS)
 // ==========================================
 function filtrarDeudas(cat) {
   filtroCategoriaActual = cat;
@@ -1249,7 +1442,7 @@ async function marcarComoPagado(id) {
 }
 
 // ==========================================
-// 8. HISTORIAL ACUMULADO Y TICKET
+// 9. HISTORIAL ACUMULADO Y TICKET
 // ==========================================
 function cargarHistorialAcumulado() {
   const tbody = document.getElementById("tablaHistorialRango");
@@ -1359,12 +1552,11 @@ function mostrarTicketHistorial(idVenta) {
 }
 
 // ==========================================
-// 9. CONFIGURACIÓN FISCAL E IMPRESIÓN
+// 10. CONFIGURACIÓN FISCAL E IMPRESIÓN
 // ==========================================
-// Función para GUARDAR los datos del SENIAT en la nube
 async function guardarDatosNegocio() {
     const datos = {
-        id: 1, // Usamos siempre el ID 1 para que actualice la misma fila y no cree varias
+        id: 1,
         razonSocial: document.getElementById("cfgRazonSocial").value.trim(),
         rif: document.getElementById("cfgRif").value.trim(),
         direccion: document.getElementById("cfgDireccion").value.trim(),
@@ -1374,46 +1566,27 @@ async function guardarDatosNegocio() {
     };
 
     try {
-        // 1. Guardar en Supabase (upsert actualiza si existe, o crea si no existe)
-        const { data, error } = await supabaseClient.from('configuracion_fiscal')
-            .upsert([datos]);
-
+        const { error } = await supabaseClient.from('configuracion_fiscal').upsert([datos]);
         if (error) throw error;
-
-        // 2. Guardar un respaldo local por si te quedas sin internet
         localStorage.setItem('cfg_negocio', JSON.stringify(datos));
-        
         alert("¡Configuración fiscal guardada en la nube con éxito!");
-        
     } catch (error) {
         console.error("Error guardando en Supabase:", error);
-        alert("Hubo un error al guardar en la nube. Se guardará solo de forma local.");
-        // Respaldo local de emergencia
         localStorage.setItem('cfg_negocio', JSON.stringify(datos));
+        alert("Guardado localmente por falta de conexión a Supabase.");
     }
 }
 
-// Función para CARGAR los datos del SENIAT desde la nube al abrir la app
 async function cargarDatosNegocioUI() {
     try {
-        // .maybeSingle() evita el error 406 si la tabla está vacía
-        const { data, error } = await supabaseClient
-            .from('configuracion_fiscal')
-            .select('*')
-            .eq('id', 1)
-            .maybeSingle();
-
+        const { data, error } = await supabaseClient.from('configuracion_fiscal').select('*').eq('id', 1).maybeSingle();
         let datosNegocio = data;
 
-        // Si no hay datos en la nube o hay error, buscar en el respaldo local
         if (error || !data) {
             const guardadoLocal = localStorage.getItem('cfg_negocio');
-            if (guardadoLocal) {
-                datosNegocio = JSON.parse(guardadoLocal);
-            }
+            if (guardadoLocal) datosNegocio = JSON.parse(guardadoLocal);
         }
 
-        // Si encontramos datos (en la nube o locales), llenamos los cuadros de texto
         if (datosNegocio) {
             document.getElementById("cfgRazonSocial").value = datosNegocio.razonSocial || "";
             document.getElementById("cfgRif").value = datosNegocio.rif || "";
@@ -1421,8 +1594,6 @@ async function cargarDatosNegocioUI() {
             document.getElementById("cfgTelefono").value = datosNegocio.telefono || "";
             document.getElementById("cfgSerie").value = datosNegocio.serie || "";
             document.getElementById("cfgCorrelativo").value = datosNegocio.correlativo || 0;
-            
-            // Actualizamos el respaldo local
             localStorage.setItem('cfg_negocio', JSON.stringify(datosNegocio));
         }
     } catch (error) {
@@ -1490,7 +1661,7 @@ async function confirmarEImprimirFactura() {
 }
 
 // ==========================================
-// 10. EXPORTACIÓN A CSV / EXCEL
+// 11. EXPORTACIÓN A CSV / EXCEL
 // ==========================================
 function exportarCSV() {
   const fechaEl = document.getElementById("fechaVentas");
