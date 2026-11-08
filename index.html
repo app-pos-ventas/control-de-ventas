@@ -1430,8 +1430,14 @@ function compartirFacturaWhatsApp() {
 }
 
 // ==========================================
-// 10. EXPORTACIÓN A CSV / EXCEL
+// 10. EXPORTACIÓN A CSV / EXCEL (FORMATEADO)
 // ==========================================
+function formatearNumeroExcel(valor) {
+  if (valor === undefined || valor === null || isNaN(valor)) return "0,00";
+  // Redondea a 2 decimales y cambia punto por coma para Excel en español
+  return parseFloat(valor).toFixed(2).replace('.', ',');
+}
+
 function exportarCSV() {
   const fechaEl = document.getElementById("fechaVentas");
   const fecha = fechaEl ? fechaEl.value : new Date().toISOString().split('T')[0];
@@ -1439,9 +1445,16 @@ function exportarCSV() {
 
   if (ventasDia.length === 0) return alert("No hay ventas en esta fecha.");
 
-  let csv = "Hora;Cliente;Categoria;Productos;Monto USD;Monto Bs;Tasa;Estado\n";
+  // BOM UTF-8 para que WPS / Excel abra tildes y caracteres correctamente
+  let csv = "\uFEFF";
+  csv += "Hora;Cliente;Categoria;Productos;Monto USD ($);Monto BS (Bs);Tasa BCV;Estado\n";
+
   ventasDia.forEach(v => {
-    csv += `"${v.hora}";"${v.cliente}";"${v.categoria}";"${v.detalle}";"${v.montoUSD}";"${v.montoBS}";"${v.tasaUsada}";"${v.estado}"\n`;
+    const usd = formatearNumeroExcel(v.montoUSD);
+    const bs = formatearNumeroExcel(v.montoBS);
+    const tasa = formatearNumeroExcel(v.tasaUsada);
+
+    csv += `"${v.hora}";"${v.cliente}";"${v.categoria}";"${v.detalle}";"${usd}";"${bs}";"${tasa}";"${v.estado}"\n`;
   });
 
   descargarBlob(csv, `Ventas_${fecha}.csv`);
@@ -1449,10 +1462,18 @@ function exportarCSV() {
 
 function exportarHistorialCSV() {
   if (ventasGlobales.length === 0) return alert("No hay ventas en el historial.");
-  let csv = "Fecha;Hora;Cliente;Categoria;Productos;Monto USD;Monto Bs;Tasa;Estado\n";
+
+  let csv = "\uFEFF";
+  csv += "Fecha;Hora;Cliente;Categoria;Productos;Monto USD ($);Monto BS (Bs);Tasa BCV;Estado\n";
+
   ventasGlobales.forEach(v => {
-    csv += `"${v.fecha}";"${v.hora}";"${v.cliente}";"${v.categoria}";"${v.detalle}";"${v.montoUSD}";"${v.montoBS}";"${v.tasaUsada}";"${v.estado}"\n`;
+    const usd = formatearNumeroExcel(v.montoUSD);
+    const bs = formatearNumeroExcel(v.montoBS);
+    const tasa = formatearNumeroExcel(v.tasaUsada);
+
+    csv += `"${v.fecha}";"${v.hora}";"${v.cliente}";"${v.categoria}";"${v.detalle}";"${usd}";"${bs}";"${tasa}";"${v.estado}"\n`;
   });
+
   descargarBlob(csv, `Historial_Acumulado.csv`);
 }
 
