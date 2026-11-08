@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Control de Ventas e Inventario - MiControl</title>
 
-<!-- Icono PWA para Acceso Directo -->
+<!-- Icono PWA -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%236366f1'/><path d='M256 96L128 160v192l128 64 128-64V160L256 96zm0 42.6L348 185 256 231 164 185l92-46.4z' fill='%23ffffff'/></svg>">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%236366f1'/><path d='M256 96L128 160v192l128 64 128-64V160L256 96zm0 42.6L348 185 256 231 164 185l92-46.4z' fill='%23ffffff'/></svg>">
 <meta name="mobile-web-app-capable" content="yes">
@@ -121,12 +121,6 @@ body { background-color: var(--bg-app); color: var(--text-dark); display: flex; 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
 .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 15px; align-items: end; }
 
-/* Grid de Botones Táctiles */
-.grid-botones-rapidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
-.btn-producto-tactil { background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px 12px; text-align: center; cursor: pointer; box-shadow: var(--shadow-soft); transition: all 0.15s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.btn-producto-tactil:hover { border-color: var(--accent-primary); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(99, 102, 241, 0.15); }
-.btn-producto-tactil:active { transform: scale(0.97); }
-
 label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
 input, select, textarea { width: 100%; padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: #f8fafc; color: var(--text-dark); outline: none; transition: border 0.2s; }
 input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); background: #fff; }
@@ -134,6 +128,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent-primary);
 .btn-primary { background: var(--accent-gradient); color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-success-solid { background: #10b981; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-secondary { background: #f1f5f9; color: var(--text-dark); border: 1px solid var(--border-color); padding: 8px 14px; font-size: 13px; font-weight: 600; border-radius: var(--radius-md); cursor: pointer; }
+.btn-share { background: #25D366; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
 .select-search-container { position: relative; width: 100%; }
 .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); max-height: 200px; overflow-y: auto; z-index: 1000; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); margin-top: 4px; }
@@ -162,12 +157,12 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 .btn-excel { background: #059669; color: white; border: none; padding: 10px 16px; border-radius: var(--radius-md); cursor: pointer; font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; }
 
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; }
-.modal-content { background: white; width: 380px; max-width: 90%; border-radius: var(--radius-lg); padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); font-family: 'Courier New', Courier, monospace; }
+.modal-content { background: white; width: 420px; max-width: 95%; border-radius: var(--radius-lg); padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); font-family: 'Courier New', Courier, monospace; }
 .ticket-header { text-align: center; border-bottom: 1px dashed #000; padding-bottom: 12px; margin-bottom: 12px; }
 .ticket-body { margin-bottom: 12px; font-size: 13px; }
 .ticket-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
 .ticket-total { border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 10px 0; margin-top: 10px; font-weight: bold; }
-.modal-actions { display: flex; gap: 10px; margin-top: 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
 
 @media screen and (max-width: 768px) {
     body { width: 100% !important; overflow-x: hidden !important; padding: 5px !important; }
@@ -213,7 +208,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
     </div>
 </div>
 
-<!-- Pantalla de Carga Animada (Splash Screen) -->
+<!-- Splash Screen -->
 <div id="app-splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; transition: opacity 0.5s ease;">
     <div style="width: 50px; height: 50px; border: 4px solid #e2e8f0; border-top: 4px solid #4f46e5; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
     <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #1e293b; margin-top: 20px; letter-spacing: -0.5px;">MiControl</h2>
@@ -241,7 +236,6 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 <div class="sidebar-menu-title">Menú Principal</div>
 <ul class="nav-list">
 <li><button class="tab-btn active" onclick="cambiarPestaña('ventas')"><i class="fa-solid fa-cart-shopping"></i> Registrar Venta</button></li>
-<li><button class="tab-btn" onclick="cambiarPestaña('ventarapida')"><i class="fa-solid fa-bolt"></i> Venta Rápida</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('inventario')"><i class="fa-solid fa-boxes-stacked"></i> Inventario / Stock</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('deudas')"><i class="fa-solid fa-file-invoice-dollar"></i> Cuentas por Cobrar</button></li>
 <li><button class="tab-btn" onclick="cambiarPestaña('historial')"><i class="fa-solid fa-chart-line"></i> Historial Acumulado</button></li>
@@ -354,8 +348,8 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 
 <div style="display: flex; gap: 15px;">
-<button class="btn-success-solid" style="flex: 1;" onclick="finalizarVenta(false)"><i class="fa-solid fa-floppy-disk"></i> REGISTRAR VENTA (SIN IMPRIMIR)</button>
-<button class="btn-primary" id="btnEmitirFactura" style="flex: 1;" onclick="finalizarVenta(true)"><i class="fa-solid fa-print"></i> REGISTRAR Y EMITIR FACTURA</button>
+<button class="btn-success-solid" style="flex: 1;" onclick="finalizarVenta(false)"><i class="fa-solid fa-floppy-disk"></i> REGISTRAR VENTA (SIN FACTURA)</button>
+<button class="btn-primary" id="btnEmitirFactura" style="flex: 1;" onclick="finalizarVenta(true)"><i class="fa-solid fa-receipt"></i> REGISTRAR Y EMITIR FACTURA LEGAL</button>
 </div>
 </div>
 
@@ -372,45 +366,6 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 <tbody id="tablaVentas"></tbody>
 </table>
 </div>
-</div>
-</div>
-
-<!-- PESTAÑA 2: VENTA RÁPIDA (BOTONES TÁCTILES) -->
-<div id="tab-ventarapida" class="tab-content">
-<div class="content-box" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border: 1px solid #c7d2fe;">
-<div class="content-box-title" style="color: #4f46e5;"><i class="fa-solid fa-bolt"></i> Venta Rápida por Botones Táctiles</div>
-<p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-  Toca los productos para agregarlos al carrito de forma inmediata. Sin errores de escritura.
-</p>
-
-<div class="grid-2" style="margin-bottom: 20px;">
-  <div>
-    <label>Nombre del Cliente / Comprador</label>
-    <input type="text" id="nombreClienteRapido" placeholder="Ej: Beatriz o Cliente General" value="Cliente General">
-  </div>
-  <div>
-    <label>Condición de Pago</label>
-    <select id="tipoPagoRapido">
-      <option value="Contado">Contado</option>
-      <option value="Fiado">Fiado</option>
-    </select>
-  </div>
-</div>
-
-<label style="margin-bottom: 10px; font-weight: 700; color: var(--accent-primary);">SELECCIONA EL PRODUCTO (TOCA PARA AGREGAR)</label>
-<div id="gridBotonesRapidos" class="grid-botones-rapidos">
-  <!-- Los botones se generan dinámicamente con sus iconos automáticos -->
-</div>
-
-<label style="margin-top: 15px;">Productos en esta Venta Rápida:</label>
-<div class="cart-list" id="carritoListaRapido"><p style="color:var(--text-light); margin:5px; font-size:13px;">Toca un botón de arriba para agregar productos.</p></div>
-
-<div class="total-display-box">
-<div class="total-display-usd">Total Orden: $<span id="subtotalRapidoUSD">0.00</span></div>
-<div class="total-display-bs">Monto a Pagar: <span id="subtotalRapidoBS">0.00</span> Bs.</div>
-</div>
-
-<button class="btn-success-solid" onclick="finalizarVentaRapida()"><i class="fa-solid fa-bolt"></i> REGISTRAR VENTA RÁPIDA</button>
 </div>
 </div>
 
@@ -444,7 +399,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 </div>
 <div class="table-responsive">
 <table>
-<thead><tr><th>Fecha / Hora</th><th>Categoría</th><th>Cliente</th><th>Detalle</th><th>Monto ($)</th><th>Monto (Bs hoy)</th><th>Acción</th></tr></thead>
+<thead><tr><th>Fecha / Hora</th><th>Categoría</th><th>Cliente</th><th>Detalle</th><th>Monto ($)</th><th>Monto (Bs hoy)</th><th>Acciones de Cobro</th></tr></thead>
 <tbody id="tablaDeudas"></tbody>
 </table>
 </div>
@@ -544,7 +499,7 @@ td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size
 <div class="modal-content">
 <div id="ticketPrintArea">
 <div class="ticket-header">
-<small style="font-size: 14px; font-weight: bold;">FACTURA</small><br>
+<small style="font-size: 14px; font-weight: bold;">FACTURA LEGAL SENIAT</small><br>
 <strong id="pRazonSocial">NOMBRE NEGOCIO C.A.</strong><br>
 RIF: <span id="pRif">J-00000000-0</span><br>
 <span id="pDireccion">Valencia, Carabobo</span><br>
@@ -562,7 +517,7 @@ TEL: <span id="pTelefono">0241-0000000</span><br><br>
 ----------------------------------------
 <div class="ticket-row"><span>SUBTOTAL (Bs):</span><span id="pSubtotalBS">0.00 Bs</span></div>
 <div class="ticket-row"><span>IVA (16%):</span><span id="pIvaBS">0.00 Bs</span></div>
-<div class="ticket-row"><span>TASA:</span><span id="pTasa">0.00 Bs/$</span></div>
+<div class="ticket-row"><span>TASA BCV:</span><span id="pTasa">0.00 Bs/$</span></div>
 <div class="ticket-total">
 <div class="ticket-row"><span>TOTAL A PAGAR (Bs):</span><span id="pTotalBS">0.00 Bs</span></div>
 </div>
@@ -570,8 +525,9 @@ TEL: <span id="pTelefono">0241-0000000</span><br><br>
 </div>
 </div>
 <div class="modal-actions">
-<button class="btn-danger" style="flex:1;" onclick="cerrarModalFactura()">❌ Cancelar</button>
-<button class="btn-success" style="flex:1; font-size:13px;" onclick="confirmarEImprimirFactura()">🖨️ Imprimir</button>
+<button class="btn-share" onclick="compartirFacturaWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Compartir / Enviar PDF o WhatsApp</button>
+<button class="btn-success-solid" onclick="confirmarEImprimirFactura()"><i class="fa-solid fa-print"></i> Imprimir Factura</button>
+<button class="btn-danger" onclick="cerrarModalFactura()">❌ Cerrar</button>
 </div>
 </div>
 </div>
@@ -593,7 +549,6 @@ try {
 }
 
 let carrito = [];
-let carritoRapido = [];
 let productosGlobales = [];
 let ventasGlobales = [];
 let filtroCategoriaActual = 'todas';
@@ -641,7 +596,7 @@ function procesarLogin(event) {
     if (errorEl) errorEl.style.display = "none";
   } else {
     if (errorEl) {
-      errorEl.innerText = "Ingresa un usuario y contraseña válidos.";
+      errorEl.innerText = "Usuario o contraseña incorrectos.";
       errorEl.style.display = "block";
     }
   }
@@ -701,7 +656,6 @@ function guardarYActualizarTasa() {
   if (tasaEl) localStorage.setItem('tasa_usd', tasaEl.value);
   
   renderizarCarrito();
-  renderizarCarritoRapido();
   cargarCatalogoProductos();
   cargarVentasDia();
   cargarCuentasPorCobrar();
@@ -719,11 +673,10 @@ function cambiarPestaña(tab) {
   const targetContent = document.getElementById(`tab-${tab}`);
   if (targetContent) targetContent.classList.add('active');
 
-  const mapTabs = { 'ventas': 0, 'ventarapida': 1, 'inventario': 2, 'deudas': 3, 'historial': 4, 'productos': 5, 'negocio': 6 };
+  const mapTabs = { 'ventas': 0, 'inventario': 1, 'deudas': 2, 'historial': 3, 'productos': 4, 'negocio': 5 };
   if (btns[mapTabs[tab]]) btns[mapTabs[tab]].classList.add('active');
 
   if(tab === 'ventas') cargarVentasDia();
-  if(tab === 'ventarapida') renderizarBotonesVentaRapida();
   if(tab === 'inventario') cargarInventario();
   if(tab === 'deudas') cargarCuentasPorCobrar();
   if(tab === 'historial') cargarHistorialAcumulado();
@@ -757,22 +710,8 @@ function toggleOpcionesFiado() {
 }
 
 // ==========================================
-// 4. CATÁLOGO, ICONOS AUTOMÁTICOS E INVENTARIO
+// 4. CATÁLOGO E INVENTARIO
 // ==========================================
-function obtenerIconoAutomatico(nombreProducto) {
-  const nombre = nombreProducto.toLowerCase();
-  if (nombre.includes('refresco') || nombre.includes('malta') || nombre.includes('agua') || nombre.includes('jugo') || nombre.includes('bebida')) {
-    return 'fa-bottle-water';
-  }
-  if (nombre.includes('inyectadora') || nombre.includes('jeringa') || nombre.includes('aguja')) {
-    return 'fa-syringe';
-  }
-  if (nombre.includes('solución') || nombre.includes('suero') || nombre.includes('gaza') || nombre.includes('alcohol') || nombre.includes('cura')) {
-    return 'fa-briefcase-medical';
-  }
-  return 'fa-tag';
-}
-
 async function cargarCatalogoProductos() {
   let cargados = false;
   if (supabaseClient) {
@@ -819,7 +758,6 @@ async function cargarCatalogoProductos() {
       `;
     });
   }
-  renderizarBotonesVentaRapida();
 }
 
 async function guardarNuevoProducto() {
@@ -1033,189 +971,11 @@ function quitarDelCarrito(index) {
 }
 
 // ==========================================
-// 6. VENTA RÁPIDA POR BOTONES TÁCTILES
-// ==========================================
-function renderizarBotonesVentaRapida() {
-  const contenedor = document.getElementById("gridBotonesRapidos");
-  if (!contenedor) return;
-  
-  const tasa = obtenerTasaActual();
-  contenedor.innerHTML = "";
-
-  if (productosGlobales.length === 0) {
-    contenedor.innerHTML = '<p style="color:var(--text-light); font-size:13px;">No hay productos en el catálogo.</p>';
-    return;
-  }
-
-  productosGlobales.forEach((p) => {
-    const icono = obtenerIconoAutomatico(p.nombre);
-    const precioBs = (p.precioUSD * tasa).toFixed(2);
-
-    contenedor.innerHTML += `
-      <button type="button" class="btn-producto-tactil" onclick="agregarAlCarritoRapido(${p.id})">
-        <div style="font-size: 22px; color: var(--accent-primary); margin-bottom: 6px;">
-          <i class="fa-solid ${icono}"></i>
-        </div>
-        <div style="font-weight: 700; font-size: 13px; color: var(--text-dark); margin-bottom: 2px;">${p.nombre}</div>
-        <div style="font-weight: 800; color: var(--accent-primary); font-size: 14px;">$${p.precioUSD.toFixed(2)}</div>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${p.stock} Stock</div>
-      </button>
-    `;
-  });
-  renderizarCarritoRapido();
-}
-
-function agregarAlCarritoRapido(idProd) {
-  const prod = productosGlobales.find(p => p.id === idProd);
-  if (!prod) return;
-
-  // Verificar cantidad actual en el carrito rápido
-  const itemExistente = carritoRapido.find(i => i.id === idProd);
-  const cantidadActual = itemExistente ? itemExistente.cantidad : 0;
-
-  if ((cantidadActual + 1) > prod.stock) {
-    alert(`Stock insuficiente. Solo quedan ${prod.stock} unidades.`);
-    return;
-  }
-
-  if (itemExistente) {
-    itemExistente.cantidad++;
-    itemExistente.subtotalUSD = itemExistente.cantidad * itemExistente.precioUSD;
-  } else {
-    carritoRapido.push({
-      id: prod.id,
-      nombre: prod.nombre,
-      precioUSD: prod.precioUSD,
-      cantidad: 1,
-      subtotalUSD: prod.precioUSD
-    });
-  }
-  renderizarCarritoRapido();
-}
-
-function renderizarCarritoRapido() {
-  const contenedor = document.getElementById("carritoListaRapido");
-  if (!contenedor) return;
-  const tasa = obtenerTasaActual();
-
-  if (carritoRapido.length === 0) {
-    contenedor.innerHTML = '<p style="color:var(--text-light); margin:5px; font-size:13px;">Toca un botón de arriba para agregar productos.</p>';
-    if (document.getElementById("subtotalRapidoUSD")) document.getElementById("subtotalRapidoUSD").innerText = "0.00";
-    if (document.getElementById("subtotalRapidoBS")) document.getElementById("subtotalRapidoBS").innerText = "0.00";
-    return;
-  }
-
-  contenedor.innerHTML = "";
-  let totalUSD = 0;
-
-  carritoRapido.forEach((item, index) => {
-    totalUSD += item.subtotalUSD;
-    const subBs = (item.subtotalUSD * tasa).toFixed(2);
-    contenedor.innerHTML += `
-      <div class="cart-item">
-        <span><strong>${item.cantidad}x</strong> ${item.nombre} ($${item.precioUSD.toFixed(2)} c/u)</span>
-        <span><strong>$${item.subtotalUSD.toFixed(2)}</strong> <small style="color:var(--accent-primary);">(${subBs} Bs)</small> <button class="btn-danger" style="margin-left:8px;" onclick="quitarDelCarritoRapido(${index})"><i class="fa-solid fa-xmark"></i></button></span>
-      </div>
-    `;
-  });
-
-  if (document.getElementById("subtotalRapidoUSD")) document.getElementById("subtotalRapidoUSD").innerText = totalUSD.toFixed(2);
-  if (document.getElementById("subtotalRapidoBS")) document.getElementById("subtotalRapidoBS").innerText = (totalUSD * tasa).toFixed(2);
-}
-
-function quitarDelCarritoRapido(index) {
-  carritoRapido.splice(index, 1);
-  renderizarCarritoRapido();
-}
-
-async function finalizarVentaRapida() {
-  if (carritoRapido.length === 0) {
-    alert("Agrega al menos un producto tocando los botones.");
-    return;
-  }
-
-  const tasa = obtenerTasaActual();
-  const cliente = document.getElementById("nombreClienteRapido").value.trim() || "Cliente General";
-  const tipoPago = document.getElementById("tipoPagoRapido").value;
-  const fecha = new Date().toISOString().split('T')[0];
-  const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-  let subtotalUSD = 0;
-  carritoRapido.forEach(i => subtotalUSD += i.subtotalUSD);
-  let totalUSD = subtotalUSD;
-  let totalBS = totalUSD * tasa;
-  let estado = (tipoPago === 'Fiado') ? 'Pendiente' : 'Pagado';
-
-  const nuevaVenta = {
-    id: Date.now(),
-    fecha: fecha,
-    hora: hora,
-    cliente: cliente,
-    rifCliente: "V-00000000",
-    telefonoCliente: "N/A",
-    dirCliente: "Local",
-    categoria: tipoPago === 'Fiado' ? 'Particular' : 'Contado',
-    detalle: carritoRapido.map(i => `${i.cantidad} ${i.nombre}`).join(", "),
-    items: [...carritoRapido],
-    subtotalUSD: subtotalUSD,
-    subtotalBS: subtotalUSD * tasa,
-    ivaUSD: 0,
-    ivaBS: 0,
-    montoUSD: totalUSD,
-    montoBS: totalBS,
-    tasaUsada: tasa,
-    estado: estado
-  };
-
-  // Descontar stock
-  for (let item of nuevaVenta.items) {
-    const prod = productosGlobales.find(p => p.id === item.id);
-    if (prod) {
-      prod.stock = Math.max(0, prod.stock - item.cantidad);
-      if (supabaseClient && prod.id) {
-        try { await supabaseClient.from('productos').update({ stock: prod.stock }).eq('id', prod.id); } catch(e){}
-      }
-    }
-  }
-  localStorage.setItem('catalogo_productos', JSON.stringify(productosGlobales));
-
-  ventasGlobales.push(nuevaVenta);
-  localStorage.setItem('ventas_locales', JSON.stringify(ventasGlobales));
-
-  if (supabaseClient) {
-    try {
-      await supabaseClient.from('ventas').insert([{
-        id: nuevaVenta.id,
-        fecha: nuevaVenta.fecha,
-        hora: nuevaVenta.hora,
-        cliente: nuevaVenta.cliente,
-        rif_cliente: nuevaVenta.rifCliente,
-        dir_cliente: nuevaVenta.dirCliente,
-        categoria: nuevaVenta.categoria,
-        detalle: nuevaVenta.detalle,
-        monto_usd: nuevaVenta.montoUSD,
-        monto_bs: nuevaVenta.montoBS,
-        tasa_usada: nuevaVenta.tasaUsada,
-        estado: nuevaVenta.estado,
-        items: nuevaVenta.items
-      }]);
-    } catch(e){}
-  }
-
-  carritoRapido = [];
-  document.getElementById("nombreClienteRapido").value = "Cliente General";
-  renderizarCarritoRapido();
-  await sincronizarTodo();
-  alert(`✅ Venta rápida registrada con éxito para "${cliente}".`);
-  cambiarPestaña('ventas');
-}
-
-// ==========================================
-// 7. REGISTRO DE VENTAS MANUALES
+// 6. REGISTRO Y EMISIÓN DE VENTAS Y FACTURAS
 // ==========================================
 function finalizarVenta(conFactura = false) {
   if(carrito.length === 0) {
-    alert("Agrega al menos un producto.");
+    alert("Agrega al menos un producto al carrito.");
     return;
   }
 
@@ -1264,11 +1024,14 @@ function finalizarVenta(conFactura = false) {
   };
 
   if (conFactura) {
+    // Incrementar y consumir correlativo inmediatamente
+    incrementarCorrelativoFiscal();
     ventaTempParaImprimir = nuevaVenta;
+    guardarVentaEnSistema(nuevaVenta);
     abrirModalFactura(nuevaVenta);
   } else {
     guardarVentaEnSistema(nuevaVenta);
-    alert("¡Venta registrada con éxito!");
+    alert("¡Venta registrada con éxito en el sistema!");
   }
 }
 
@@ -1397,7 +1160,7 @@ async function eliminarVenta(id) {
 }
 
 // ==========================================
-// 8. CUENTAS POR COBRAR (DEUDAS)
+// 7. CUENTAS POR COBRAR (PAGO Y EMISIÓN)
 // ==========================================
 function filtrarDeudas(cat) {
   filtroCategoriaActual = cat;
@@ -1433,7 +1196,12 @@ function cargarCuentasPorCobrar() {
           <td>${v.detalle}</td>
           <td><strong>$${v.montoUSD.toFixed(2)}</strong></td>
           <td><strong style="color:var(--accent-primary);">${deudaBsHoy} Bs.</strong></td>
-          <td><button class="btn-success" onclick="marcarComoPagado(${v.id})">✅ Marcar Pagado</button></td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn-success" onclick="marcarComoPagado(${v.id}, false)">✅ Solo Pagado</button>
+              <button class="btn-primary" style="padding:6px 10px; font-size:11px;" onclick="marcarComoPagado(${v.id}, true)"><i class="fa-solid fa-receipt"></i> Pagar y Emitir Factura</button>
+            </div>
+          </td>
         </tr>
       `;
     }
@@ -1443,22 +1211,31 @@ function cargarCuentasPorCobrar() {
   if(document.getElementById("totalClinicaBs")) document.getElementById("totalClinicaBs").innerText = `${(totalClinicaUSD * tasa).toFixed(2)} Bs.`;
 }
 
-async function marcarComoPagado(id) {
+async function marcarComoPagado(id, conFactura = false) {
   const v = ventasGlobales.find(v => v.id === id);
-  if (v) v.estado = 'Pagado';
+  if (!v) return;
 
+  v.estado = 'Pagado';
   localStorage.setItem('ventas_locales', JSON.stringify(ventasGlobales));
 
   if (supabaseClient) {
     try { await supabaseClient.from('ventas').update({ estado: 'Pagado' }).eq('id', id); } catch(e){}
   }
+
   await sincronizarTodo();
   cargarCuentasPorCobrar();
-  alert("¡Cuenta marcada como PAGADA!");
+
+  if (conFactura) {
+    incrementarCorrelativoFiscal();
+    ventaTempParaImprimir = v;
+    abrirModalFactura(v);
+  } else {
+    alert("¡Cuenta marcada como PAGADA con éxito!");
+  }
 }
 
 // ==========================================
-// 9. HISTORIAL ACUMULADO Y TICKET
+// 8. HISTORIAL ACUMULADO
 // ==========================================
 function cargarHistorialAcumulado() {
   const tbody = document.getElementById("tablaHistorialRango");
@@ -1504,71 +1281,13 @@ function cargarHistorialAcumulado() {
 
 function mostrarTicketHistorial(idVenta) {
   const venta = ventasGlobales.find(v => String(v.id) === String(idVenta));
-  if (!venta) {
-    alert("No se encontró la información de esta venta.");
-    return;
-  }
-
-  const config = JSON.parse(localStorage.getItem('cfg_negocio')) || {
-    razonSocial: "CLÍNICA Y SERVICIOS C.A.",
-    rif: "J-12345678-0",
-    direccion: "Valencia, Carabobo",
-    telefono: "0241-0000000"
-  };
-
-  const modalAnterior = document.getElementById("modalTicketFlotante");
-  if (modalAnterior) modalAnterior.remove();
-
-  const montoBS = Number(venta.montoBS) || 0;
-  const montoUSD = Number(venta.montoUSD) || 0;
-  const tasa = venta.tasaUsada || (montoUSD > 0 ? (montoBS / montoUSD).toFixed(2) : '1.00');
-
-  const modalDiv = document.createElement("div");
-  modalDiv.id = "modalTicketFlotante";
-  modalDiv.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 15px; box-sizing: border-box;";
-
-  modalDiv.innerHTML = `
-    <div style="background: #fff; width: 100%; max-width: 380px; padding: 25px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); font-family: 'Courier New', Courier, monospace; text-align: center; max-height: 90vh; overflow-y: auto;">
-      <h3 style="margin: 0 0 5px 0; font-size: 16px;">TICKET DE VENTA</h3>
-      <p style="font-size: 13px; font-weight: bold; margin: 2px 0;">${config.razonSocial}</p>
-      <p style="font-size: 11px; margin: 2px 0;">RIF: ${config.rif}</p>
-      <p style="font-size: 11px; margin: 2px 0;">${config.direccion}</p>
-      <p style="font-size: 11px; margin: 2px 0 10px 0;">TEL: ${config.telefono}</p>
-      
-      <div style="border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc; padding: 10px 0; text-align: left; font-size: 12px; margin: 10px 0;">
-        <p style="margin: 3px 0;"><b>FECHA:</b> ${venta.fecha} - ${venta.hora}</p>
-        <p style="margin: 3px 0;"><b>CLIENTE:</b> ${venta.cliente || 'Contado General'}</p>
-        <p style="margin: 3px 0;"><b>ESTADO:</b> <span style="font-weight:bold; color:${venta.estado === 'Pagado' ? '#28a745' : '#dc3545'};">${venta.estado}</span></p>
-      </div>
-
-      <div style="text-align: left; font-size: 12px; margin: 10px 0;">
-        <b>Productos:</b><br>
-        <p style="white-space: pre-line; margin: 5px 0;">${venta.detalle}</p>
-      </div>
-
-      <div style="border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc; padding: 10px 0; text-align: right; font-size: 13px; margin: 10px 0;">
-        <p style="margin: 4px 0;">TASA: <b>${tasa} Bs/$</b></p>
-        <p style="margin: 4px 0;">TOTAL USD: <b>$${montoUSD.toFixed(2)}</b></p>
-        <p style="margin: 4px 0; font-size: 15px;">TOTAL (Bs): <b>Bs. ${montoBS.toFixed(2)}</b></p>
-      </div>
-
-      <p style="font-size: 11px; margin: 15px 0 5px 0;">*** GRACIAS POR SU COMPRA ***</p>
-
-      <div style="display: flex; gap: 10px; margin-top: 15px;" class="modal-actions">
-        <button id="btnCerrarModal" style="flex: 1; background: #dc3545; color: white; border: none; padding: 10px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer;">Cerrar</button>
-        <button id="btnImprimirModal" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer;">🖨️ Imprimir</button>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(modalDiv);
-
-  document.getElementById("btnCerrarModal").addEventListener("click", () => modalDiv.remove());
-  document.getElementById("btnImprimirModal").addEventListener("click", () => window.print());
+  if (!venta) return;
+  ventaTempParaImprimir = venta;
+  abrirModalFactura(venta);
 }
 
 // ==========================================
-// 10. CONFIGURACIÓN FISCAL E IMPRESIÓN
+// 9. CONFIGURACIÓN FISCAL, CORRELATIVO Y FACTURACIÓN
 // ==========================================
 async function guardarDatosNegocio() {
     const datos = {
@@ -1578,16 +1297,15 @@ async function guardarDatosNegocio() {
         direccion: document.getElementById("cfgDireccion").value.trim(),
         telefono: document.getElementById("cfgTelefono").value.trim(),
         serie: document.getElementById("cfgSerie").value.trim(),
-        correlativo: parseInt(document.getElementById("cfgCorrelativo").value) || 0
+        correlativo: parseInt(document.getElementById("cfgCorrelativo").value) || 1
     };
 
     try {
         const { error } = await supabaseClient.from('configuracion_fiscal').upsert([datos]);
         if (error) throw error;
         localStorage.setItem('cfg_negocio', JSON.stringify(datos));
-        alert("¡Configuración fiscal guardada en la nube con éxito!");
+        alert("¡Configuración fiscal guardada con éxito!");
     } catch (error) {
-        console.error("Error guardando en Supabase:", error);
         localStorage.setItem('cfg_negocio', JSON.stringify(datos));
         alert("Guardado localmente por falta de conexión a Supabase.");
     }
@@ -1595,10 +1313,10 @@ async function guardarDatosNegocio() {
 
 async function cargarDatosNegocioUI() {
     try {
-        const { data, error } = await supabaseClient.from('configuracion_fiscal').select('*').eq('id', 1).maybeSingle();
+        const { data } = await supabaseClient.from('configuracion_fiscal').select('*').eq('id', 1).maybeSingle();
         let datosNegocio = data;
 
-        if (error || !data) {
+        if (!data) {
             const guardadoLocal = localStorage.getItem('cfg_negocio');
             if (guardadoLocal) datosNegocio = JSON.parse(guardadoLocal);
         }
@@ -1609,12 +1327,23 @@ async function cargarDatosNegocioUI() {
             document.getElementById("cfgDireccion").value = datosNegocio.direccion || "";
             document.getElementById("cfgTelefono").value = datosNegocio.telefono || "";
             document.getElementById("cfgSerie").value = datosNegocio.serie || "";
-            document.getElementById("cfgCorrelativo").value = datosNegocio.correlativo || 0;
+            document.getElementById("cfgCorrelativo").value = datosNegocio.correlativo || 1;
             localStorage.setItem('cfg_negocio', JSON.stringify(datosNegocio));
         }
-    } catch (error) {
-        console.error("Error cargando configuración fiscal:", error);
-    }
+    } catch (error) {}
+}
+
+async function incrementarCorrelativoFiscal() {
+  let config = JSON.parse(localStorage.getItem('cfg_negocio')) || { correlativo: 1, serie: "FACT-001-" };
+  config.correlativo = (parseInt(config.correlativo) || 1) + 1;
+  localStorage.setItem('cfg_negocio', JSON.stringify(config));
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('configuracion_fiscal').update({ correlativo: config.correlativo }).eq('id', 1);
+    } catch(e){}
+  }
+  cargarDatosNegocioUI();
 }
 
 function abrirModalFactura(venta) {
@@ -1636,21 +1365,29 @@ function abrirModalFactura(venta) {
   if(document.getElementById("pFecha")) document.getElementById("pFecha").innerText = venta.fecha;
   if(document.getElementById("pHora")) document.getElementById("pHora").innerText = venta.hora;
   if(document.getElementById("pCliente")) document.getElementById("pCliente").innerText = venta.cliente;
-  if(document.getElementById("pClienteRif")) document.getElementById("pClienteRif").innerText = venta.rifCliente;
+  if(document.getElementById("pClienteRif")) document.getElementById("pClienteRif").innerText = venta.rifCliente || 'V-00000000';
   if(document.getElementById("pClienteTel")) document.getElementById("pClienteTel").innerText = venta.telefonoCliente || 'N/A';
-  if(document.getElementById("pClienteDir")) document.getElementById("pClienteDir").innerText = venta.dirCliente;
+  if(document.getElementById("pClienteDir")) document.getElementById("pClienteDir").innerText = venta.dirCliente || 'Valencia';
   if(document.getElementById("pTasa")) document.getElementById("pTasa").innerText = `${venta.tasaUsada.toFixed(2)} Bs/$`;
 
   let htmlItems = "";
-  venta.items.forEach(item => {
-    let precioBsItem = item.precioUSD * venta.tasaUsada;
-    let totalBsItem = precioBsItem * item.cantidad;
-    htmlItems += `<div class="ticket-row"><span>${item.cantidad}x ${item.nombre}</span><span>${totalBsItem.toFixed(2)} Bs</span></div>`;
-  });
+  if (venta.items && venta.items.length > 0) {
+    venta.items.forEach(item => {
+      let precioBsItem = item.precioUSD * venta.tasaUsada;
+      let totalBsItem = precioBsItem * item.cantidad;
+      htmlItems += `<div class="ticket-row"><span>${item.cantidad}x ${item.nombre}</span><span>${totalBsItem.toFixed(2)} Bs</span></div>`;
+    });
+  } else {
+    htmlItems = `<div class="ticket-row"><span>${venta.detalle}</span><span>${venta.montoBS.toFixed(2)} Bs</span></div>`;
+  }
+  
   if(document.getElementById("pDetalleItems")) document.getElementById("pDetalleItems").innerHTML = htmlItems;
 
-  if(document.getElementById("pSubtotalBS")) document.getElementById("pSubtotalBS").innerText = `${venta.subtotalBS.toFixed(2)} Bs`;
-  if(document.getElementById("pIvaBS")) document.getElementById("pIvaBS").innerText = `${venta.ivaBS.toFixed(2)} Bs`;
+  const subtotalBs = venta.subtotalBS || (venta.montoBS / 1.16);
+  const ivaBs = venta.ivaBS || (venta.montoBS - subtotalBs);
+
+  if(document.getElementById("pSubtotalBS")) document.getElementById("pSubtotalBS").innerText = `${subtotalBs.toFixed(2)} Bs`;
+  if(document.getElementById("pIvaBS")) document.getElementById("pIvaBS").innerText = `${ivaBs.toFixed(2)} Bs`;
   if(document.getElementById("pTotalBS")) document.getElementById("pTotalBS").innerText = `${venta.montoBS.toFixed(2)} Bs`;
 
   const mFactura = document.getElementById("modalFactura");
@@ -1663,21 +1400,37 @@ function cerrarModalFactura() {
   ventaTempParaImprimir = null;
 }
 
-async function confirmarEImprimirFactura() {
-  if (!ventaTempParaImprimir) return;
-
-  let cfg = JSON.parse(localStorage.getItem('cfg_negocio')) || { correlativo: 1 };
-  cfg.correlativo = (parseInt(cfg.correlativo) || 1) + 1;
-  localStorage.setItem('cfg_negocio', JSON.stringify(cfg));
-  cargarDatosNegocioUI();
-
-  await guardarVentaEnSistema(ventaTempParaImprimir);
+function confirmarEImprimirFactura() {
   window.print();
-  cerrarModalFactura();
+}
+
+function compartirFacturaWhatsApp() {
+  if (!ventaTempParaImprimir) return;
+  const v = ventaTempParaImprimir;
+  const config = JSON.parse(localStorage.getItem('cfg_negocio')) || { razonSocial: "MiControl C.A." };
+  
+  const mensaje = `🧾 *FACTURA LEGAL - ${config.razonSocial}*\n` +
+                  `*Cliente:* ${v.cliente}\n` +
+                  `*Fecha:* ${v.fecha} (${v.hora})\n` +
+                  `*Detalle:* ${v.detalle}\n` +
+                  `-------------------------\n` +
+                  `*TOTAL A PAGAR:* Bs. ${v.montoBS.toFixed(2)} ($${v.montoUSD.toFixed(2)} USD)\n` +
+                  `*Tasa BCV:* ${v.tasaUsada.toFixed(2)} Bs/$\n\n` +
+                  `¡Gracias por su compra!`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'Factura Legal',
+      text: mensaje
+    }).catch(() => {});
+  } else {
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  }
 }
 
 // ==========================================
-// 11. EXPORTACIÓN A CSV / EXCEL
+// 10. EXPORTACIÓN A CSV / EXCEL
 // ==========================================
 function exportarCSV() {
   const fechaEl = document.getElementById("fechaVentas");
